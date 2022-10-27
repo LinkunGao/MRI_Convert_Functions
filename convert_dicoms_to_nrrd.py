@@ -15,28 +15,26 @@ you will get 5 nrrd files with different contrast!
 
 def dcmseries2nrrd(filepath):
     datapath = filepath
-
     allFilesPath = []
-    preSlicePos = 0
-    count = 0
+    max = 0
     contrstIdx = 0
 
     dcms_name = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(datapath)
 
     for dcm in dcms_name:
         dicom = sitk.ReadImage(dcm)
-        slicePos = dicom.GetMetaData('0020|1041')
-        if slicePos != preSlicePos and preSlicePos != 0:
-            break
-        if slicePos != preSlicePos and preSlicePos == 0:
-            preSlicePos = slicePos
+        instanceNum = int(dicom.GetMetaData('0020|0012'))
+        if max < instanceNum:
+            max= instanceNum
+
+    for i in range(max):
         allFilesPath.append([])
 
     for dcm in dcms_name:
-        if count > len(allFilesPath) - 1:
-            count = 0
-        allFilesPath[count].append(dcm)
-        count += 1
+        dicom = sitk.ReadImage(dcm)
+        instanceNum = int(dicom.GetMetaData('0020|0012'))-1
+        allFilesPath[instanceNum].append(dcm)
+
     dcms_read = sitk.ImageSeriesReader()
 
     for list in allFilesPath:
@@ -45,7 +43,6 @@ def dcmseries2nrrd(filepath):
         name = "new_" + str(contrstIdx)
         contrstIdx+= 1
         sitk.WriteImage(dcms_series, name + '.nrrd')
-
 
 filepath = "/Your/dicom/files/path"
 dcmseries2nrrd(filepath)
