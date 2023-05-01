@@ -1,4 +1,4 @@
-# Convert Dicom to Nrrd with Contrast
+# MRI convert functions
 
 A python script for convert dicom files to nrrd file with sepreating contrast.
 If your dicom files include 5 different contrast images, using this script, 
