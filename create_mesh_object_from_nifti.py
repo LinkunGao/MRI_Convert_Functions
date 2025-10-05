@@ -4,10 +4,10 @@ import nibabel as nib
 import time
 
 
-def convert_nii_to_mesh():
+def convert_nii_to_mesh(source='./path/to/mask.nii.gz', dest='./path/to/mesh.obj'):
 
-    source = Path(r'./path/to/mask.nii.gz')
-    dest = Path(r'./path/to/mesh.obj')
+    source = Path(source)
+    dest = Path(dest)
 
     img = nib.load(source)
     spacing = img.header.get_zooms()

@@ -2,3 +2,4 @@ SimpleITK
 scikit-image
 pathlib
 nibabel
+trimesh
