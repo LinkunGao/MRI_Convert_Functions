@@ -3,3 +3,4 @@ scikit-image
 pathlib
 nibabel
 trimesh
+pydicom
